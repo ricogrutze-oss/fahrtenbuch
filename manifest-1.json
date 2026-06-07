@@ -1,0 +1,19 @@
+{
+  "name": "Škoda Fahrtenbuch",
+  "short_name": "Fahrtenbuch",
+  "description": "Dienstliches und privates Fahrtenbuch",
+  "start_url": "/fahrtenbuch/",
+  "scope": "/fahrtenbuch/",
+  "display": "standalone",
+  "background_color": "#111318",
+  "theme_color": "#111318",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
