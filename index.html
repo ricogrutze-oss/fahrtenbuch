@@ -189,6 +189,7 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
   <div class="tab" id="tab1" onclick="goTab(1)">Fahrten</div>
   <div class="tab" id="tab2" onclick="goTab(2)">Urlaub</div>
   <div class="tab" id="tab3" onclick="goTab(3)">Übersicht</div>
+  <div class="tab" id="tab4" onclick="goTab(4)">⚙</div>
 </div>
 
 <div class="pages-wrap">
@@ -234,6 +235,7 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 <div class="page print-target" id="page3">
   <div class="print-header">
     <h1>Fahrtenbuch – Übersicht</h1>
+    <p id="printFahrer"></p>
     <p>Erstellt am <span id="printDate"></span></p>
   </div>
   <div class="overview-pad">
@@ -260,6 +262,43 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
   </div>
 </div>
 
+
+<!-- PAGE 4: EINSTELLUNGEN -->
+<div class="page" id="page4">
+  <div class="urlaub-pad">
+    <div class="urlaub-info" style="color:#c8f135;background:rgba(200,241,53,.08);border-color:rgba(200,241,53,.2)">
+      👤 Fahrerdaten werden auf dem Druckbericht angezeigt.
+    </div>
+    <div class="modal-field" style="margin-bottom:12px">
+      <label style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px;font-family:IBM Plex Mono,monospace">Fahrer / Name</label>
+      <input type="text" id="setFahrer" placeholder="z.B. Max Mustermann"
+        style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:IBM Plex Mono,monospace;font-size:14px;padding:12px;outline:none;-webkit-appearance:none"
+        oninput="saveSettings()">
+    </div>
+    <div class="modal-field" style="margin-bottom:12px">
+      <label style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px;font-family:IBM Plex Mono,monospace">Kennzeichen</label>
+      <input type="text" id="setKennzeichen" placeholder="z.B. W-123AB"
+        style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:IBM Plex Mono,monospace;font-size:14px;padding:12px;outline:none;-webkit-appearance:none"
+        oninput="saveSettings()">
+    </div>
+    <div class="modal-field" style="margin-bottom:12px">
+      <label style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px;font-family:IBM Plex Mono,monospace">Fahrzeug</label>
+      <input type="text" id="setFahrzeug" placeholder="z.B. Škoda Octavia"
+        style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:IBM Plex Mono,monospace;font-size:14px;padding:12px;outline:none;-webkit-appearance:none"
+        oninput="saveSettings()">
+    </div>
+    <div class="modal-field" style="margin-bottom:12px">
+      <label style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px;font-family:IBM Plex Mono,monospace">Arbeitgeber</label>
+      <input type="text" id="setArbeitgeber" placeholder="z.B. Firma GmbH"
+        style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:IBM Plex Mono,monospace;font-size:14px;padding:12px;outline:none;-webkit-appearance:none"
+        oninput="saveSettings()">
+    </div>
+    <div style="padding:12px 0;font-size:10px;color:var(--muted);letter-spacing:1px">
+      Alle Angaben werden nur lokal auf diesem Gerät gespeichert.
+    </div>
+  </div>
+</div>
+
 </div></div>
 
 <div class="bottom-nav">
@@ -267,6 +306,7 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
   <div class="nav-btn"        id="nav1" onclick="goTab(1)"><div class="ico">📋</div>Fahrten</div>
   <div class="nav-btn"        id="nav2" onclick="goTab(2)"><div class="ico">🏖</div>Urlaub</div>
   <div class="nav-btn"        id="nav3" onclick="goTab(3)"><div class="ico">📊</div>Übersicht</div>
+  <div class="nav-btn"        id="nav4" onclick="goTab(4)"><div class="ico">⚙️</div>Einst.</div>
 </div>
 
 <script>
@@ -686,9 +726,10 @@ function renderMonthBlocks(fs) {
 function goTab(i) {
   currentTab=i;
   document.getElementById('pages').style.transform=`translateX(-${i*100}vw)`;
-  ['tab0','tab1','tab2','tab3'].forEach((id,j)=>document.getElementById(id).classList.toggle('active',i===j));
-  ['nav0','nav1','nav2','nav3'].forEach((id,j)=>document.getElementById(id).classList.toggle('active',i===j));
+  ['tab0','tab1','tab2','tab3','tab4'].forEach((id,j)=>document.getElementById(id).classList.toggle('active',i===j));
+  ['nav0','nav1','nav2','nav3','nav4'].forEach((id,j)=>document.getElementById(id).classList.toggle('active',i===j));
   if (i===3) renderOverview();
+  if (i===4) loadSettings();
 }
 
 function initSwipe() {
@@ -706,10 +747,37 @@ function initSwipe() {
   },{passive:true});
 }
 
-function doPrint(){document.getElementById('printDate').textContent=new Date().toLocaleDateString('de-AT');window.print();}
+function doPrint(){document.getElementById('printDate').textContent=new Date().toLocaleDateString('de-AT');updatePrintHeader();window.print();}
 function fmtDatum(iso){const d=new Date(iso);return`${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;}
 function fmtZeit(iso){const d=new Date(iso);return`${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
 function escId(id){return id.replace(/'/g,"\\'");}
+
+// EINSTELLUNGEN
+let settings = JSON.parse(localStorage.getItem('fb_settings') || '{}');
+
+function saveSettings() {
+  settings.fahrer      = document.getElementById('setFahrer').value;
+  settings.kennzeichen = document.getElementById('setKennzeichen').value;
+  settings.fahrzeug    = document.getElementById('setFahrzeug').value;
+  settings.arbeitgeber = document.getElementById('setArbeitgeber').value;
+  localStorage.setItem('fb_settings', JSON.stringify(settings));
+}
+
+function loadSettings() {
+  document.getElementById('setFahrer').value      = settings.fahrer      || '';
+  document.getElementById('setKennzeichen').value = settings.kennzeichen || '';
+  document.getElementById('setFahrzeug').value    = settings.fahrzeug    || '';
+  document.getElementById('setArbeitgeber').value = settings.arbeitgeber || '';
+}
+
+function updatePrintHeader() {
+  const lines = [];
+  if (settings.fahrer)      lines.push('Fahrer: ' + settings.fahrer);
+  if (settings.kennzeichen) lines.push('Kennzeichen: ' + settings.kennzeichen);
+  if (settings.fahrzeug)    lines.push('Fahrzeug: ' + settings.fahrzeug);
+  if (settings.arbeitgeber) lines.push('Arbeitgeber: ' + settings.arbeitgeber);
+  document.getElementById('printFahrer').textContent = lines.join(' · ');
+}
 
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
