@@ -171,6 +171,9 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 
 /* PRINT */
 @media print{
+  .print-hide { display: none !important; }
+  .print-group-row { display: flex !important; }
+
   body{background:#fff;color:#000;font-size:11px}
   .header,.tabs,.bottom-nav,.upload-zone,.upload-result,.fahrt-actions,
   .fi-undo,.print-bar,.period-row,.month-close-btn,
@@ -688,8 +691,8 @@ function renderMonthBlocks(fs){
     const dKm=mfs.filter(f=>f.typ==='dienst').reduce((s,f)=>s+f.km,0);
     const pKm=mfs.filter(f=>f.typ==='privat').reduce((s,f)=>s+f.km,0);
     const mCost=mfs.reduce((s,f)=>s+(f.cost||0),0);
-    const rows=mfs.sort((a,b)=>new Date(b.datum)-new Date(a.datum)).map(f=>`
-      <div class="month-row">
+    const rows=mfs.sort((a,b)=>new Date(a.datum)-new Date(b.datum)).map(f=>`
+      <div class="month-row" data-datum="${fmtDatum(f.datum)}" data-typ="${f.typ}" data-km="${f.km}" data-cost="${f.cost||0}" data-wt="${WT[new Date(f.datum).getDay()]}">
         <span>${fmtDatum(f.datum)} ${WT[new Date(f.datum).getDay()]}</span>
         <span>${f.km}km&nbsp;<span class="${f.typ==='dienst'?'d':'p'}">${f.typ==='dienst'?'D':'P'}</span>${f.cost>0?`&nbsp;<span class="o">${f.cost.toFixed(2)}€</span>`:''}</span>
       </div>`).join('');
@@ -700,7 +703,7 @@ function renderMonthBlocks(fs){
       </div>
       <div class="month-block-body">
         ${rows}
-        <div class="month-row" style="font-weight:600">
+        <div class="month-row" data-summary style="font-weight:600">
           <span>Summe</span>
           <span><span class="d">${dKm}D</span>/<span class="p">${pKm}P</span>km · <span class="o">${mCost.toFixed(2)}€</span></span>
         </div>
@@ -741,7 +744,47 @@ function updatePrintHeader(){
   document.getElementById('printDate').textContent   =new Date().toLocaleDateString('de-AT');
 }
 
-function doPrint(){updatePrintHeader();window.print();}
+function doPrint(){
+  updatePrintHeader();
+  // Tagesgruppen für Druck berechnen und in data-Attribut speichern
+  buildPrintGroups();
+  window.print();
+}
+
+function buildPrintGroups() {
+  // Für jede month-block-body die Zeilen nach Tag+Typ gruppieren
+  document.querySelectorAll('.month-block-body').forEach(body => {
+    const rows = Array.from(body.querySelectorAll('.month-row[data-datum]'));
+    if (!rows.length) return;
+
+    // Gruppieren nach datum+typ
+    const groups = {};
+    rows.forEach(row => {
+      const key = row.dataset.datum + '_' + row.dataset.typ;
+      if (!groups[key]) groups[key] = { rows:[], km:0, cost:0, datum:row.dataset.datum, typ:row.dataset.typ, wt:row.dataset.wt };
+      groups[key].rows.push(row);
+      groups[key].km   += parseFloat(row.dataset.km)   || 0;
+      groups[key].cost += parseFloat(row.dataset.cost) || 0;
+    });
+
+    // Alle Originalzeilen ausblenden (nur beim Druck via CSS)
+    rows.forEach(r => r.classList.add('print-hide'));
+
+    // Bereits vorhandene print-group Zeilen entfernen
+    body.querySelectorAll('.print-group-row').forEach(r => r.remove());
+
+    // Neue gruppierte Zeilen einfügen
+    const summaryRow = body.querySelector('.month-row[data-summary]');
+    Object.values(groups).sort((a,b) => a.datum.localeCompare(b.datum)).forEach(g => {
+      const div = document.createElement('div');
+      div.className = 'month-row print-group-row';
+      const costStr = g.cost > 0 ? ` · <span class="o">${g.cost.toFixed(2)}€</span>` : '';
+      div.innerHTML = `<span>${g.datum} ${g.wt}${g.rows.length>1?' ('+g.rows.length+' Fahrten)':''}</span><span>${g.km}km&nbsp;<span class="${g.typ==='dienst'?'d':'p'}">${g.typ==='dienst'?'D':'P'}</span>${costStr}</span>`;
+      if (summaryRow) body.insertBefore(div, summaryRow);
+      else body.appendChild(div);
+    });
+  });
+}
 
 // ── TABS & SWIPE ──
 function goTab(i){
