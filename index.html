@@ -11,7 +11,7 @@
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#111318;--bg2:#181b22;--bg3:#1f232d;--card:#181b22;--border:#252932;--dienst:#c8f135;--privat:#ff5c5c;--text:#e8eaf0;--muted:#5a6070;--orange:#ff9f43}
+:root{--bg:#111318;--bg2:#181b22;--bg3:#1f232d;--card:#181b22;--border:#252932;--dienst:#c8f135;--privat:#ff5c5c;--text:#e8eaf0;--muted:#8a92a8;--orange:#ff9f43}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;overscroll-behavior:none}
 .header{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 18px 12px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between}
@@ -44,15 +44,15 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 .sec-title span{color:var(--text)}
 .fahrt-card{margin:0 14px 8px;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .fahrt-head{padding:12px 14px 8px}
-.fahrt-datum{font-size:10px;color:var(--muted);margin-bottom:2px}
-.fahrt-wochentag{font-size:10px;margin-bottom:4px;letter-spacing:1px}
+.fahrt-datum{font-size:12px;color:var(--muted);margin-bottom:2px}
+.fahrt-wochentag{font-size:12px;margin-bottom:4px;letter-spacing:1px}
 .fahrt-wochentag.wd{color:var(--dienst)}
 .fahrt-wochentag.we{color:var(--privat)}
 .fahrt-wochentag.urlaub{color:var(--orange)}
 .fahrt-km-gross{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;color:var(--text)}
 .fahrt-km-gross span{font-size:14px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
-.fahrt-meta{font-size:10px;color:var(--muted);margin-top:4px}
-.fahrt-kosten{font-size:11px;color:var(--orange);margin-top:3px}
+.fahrt-meta{font-size:12px;color:var(--muted);margin-top:4px}
+.fahrt-kosten{font-size:12px;color:var(--orange);margin-top:3px}
 .fahrt-suggestion{font-size:10px;padding:4px 8px;border-radius:6px;display:inline-block;margin-top:5px}
 .fahrt-suggestion.d{background:rgba(200,241,53,.12);color:var(--dienst)}
 .fahrt-suggestion.p{background:rgba(255,92,92,.12);color:var(--privat)}
@@ -78,8 +78,8 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 .fahrt-item.privat{border-left-color:var(--privat)}
 .fahrt-item.locked{opacity:.7}
 .fi-info{flex:1}
-.fi-datum{font-size:10px;color:var(--muted);margin-bottom:1px}
-.fi-tag{font-size:10px;letter-spacing:1px;margin-bottom:2px}
+.fi-datum{font-size:12px;color:var(--muted);margin-bottom:1px}
+.fi-tag{font-size:12px;letter-spacing:1px;margin-bottom:2px}
 .fi-tag.wd{color:var(--dienst)}
 .fi-tag.we,.fi-tag.privat{color:var(--privat)}
 .fi-tag.urlaub{color:var(--orange)}
@@ -87,8 +87,8 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 .fi-km{font-family:'Bebas Neue',sans-serif;font-size:24px;line-height:1}
 .fi-km.dienst{color:var(--dienst)}
 .fi-km.privat{color:var(--privat)}
-.fi-meta{font-size:10px;color:var(--muted);margin-top:2px}
-.fi-kosten{font-size:10px;color:var(--orange);margin-top:2px}
+.fi-meta{font-size:12px;color:var(--muted);margin-top:2px}
+.fi-kosten{font-size:12px;color:var(--orange);margin-top:2px}
 .fi-undo{font-size:11px;color:var(--muted);cursor:pointer;padding:6px;flex-shrink:0}
 .fi-undo:active{color:var(--text)}
 
@@ -656,8 +656,9 @@ function updateStats(){
   document.getElementById('sF').textContent=fs.length+' Fahrten';
   document.getElementById('sDpct').textContent=gKm>0?Math.round(dKm/gKm*100)+'% Anteil':'–';
   document.getElementById('sPpct').textContent=gKm>0?Math.round(pKm/gKm*100)+'% Anteil':'–';
+  const pCost=fs.filter(f=>f.typ==='privat').reduce((s,f)=>s+(f.cost||0),0);
   document.getElementById('sK').textContent=cost.toFixed(2);
-  document.getElementById('sKsub').textContent=`EUR gesamt · Dienst: ${dCost.toFixed(2)} EUR`;
+  document.getElementById('sKsub').textContent=`EUR gesamt · D: ${dCost.toFixed(2)} · P: ${pCost.toFixed(2)} EUR`;
   document.getElementById('bDlbl').textContent=dKm.toLocaleString('de-AT')+' km';
   document.getElementById('bPlbl').textContent=pKm.toLocaleString('de-AT')+' km';
   document.getElementById('bD').style.width=gKm>0?(dKm/gKm*100)+'%':'0%';
