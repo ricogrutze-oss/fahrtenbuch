@@ -11,7 +11,7 @@
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#111318;--bg2:#181b22;--bg3:#1f232d;--card:#181b22;--border:#252932;--dienst:#c8f135;--privat:#ff5c5c;--text:#e8eaf0;--muted:#8a92a8;--orange:#ff9f43}
+:root{--bg:#111318;--bg2:#181b22;--bg3:#1f232d;--card:#181b22;--border:#252932;--dienst:#c8f135;--privat:#ff5c5c;--text:#f0f2f8;--muted:#a0a8c0;--orange:#ff9f43}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;overscroll-behavior:none}
 .header{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 18px 12px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between}
@@ -20,7 +20,7 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 .badge{background:var(--privat);color:#fff;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;display:none}
 .tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:53px;z-index:99;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex:0 0 auto;padding:11px 12px;text-align:center;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;position:relative}
+.tab{flex:0 0 auto;padding:11px 12px;text-align:center;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;position:relative}
 .tab.active{color:var(--dienst);border-bottom-color:var(--dienst)}
 .tab .cnt{position:absolute;top:5px;right:4px;background:var(--privat);color:#fff;font-size:9px;border-radius:10px;padding:1px 4px;display:none}
 .tab .cnt.show{display:inline-block}
@@ -34,13 +34,13 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer}
 .upload-icon{font-size:32px;margin-bottom:8px}
 .upload-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--dienst);margin-bottom:5px}
-.upload-sub{font-size:10px;color:var(--muted);line-height:1.7}
+.upload-sub{font-size:13px;color:var(--muted);line-height:1.7}
 .upload-result{margin:0 16px 12px;padding:11px 14px;border-radius:10px;font-size:11px;display:none;line-height:1.5}
 .upload-result.ok{background:rgba(200,241,53,.08);border:1px solid rgba(200,241,53,.25);color:var(--dienst)}
 .upload-result.err{background:rgba(255,92,92,.08);border:1px solid rgba(255,92,92,.25);color:var(--privat)}
 
 /* CARDS */
-.sec-title{padding:4px 18px 10px;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+.sec-title{padding:4px 18px 10px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
 .sec-title span{color:var(--text)}
 .fahrt-card{margin:0 14px 8px;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .fahrt-head{padding:12px 14px 8px}
@@ -53,7 +53,7 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 .fahrt-km-gross span{font-size:14px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
 .fahrt-meta{font-size:12px;color:var(--muted);margin-top:4px}
 .fahrt-kosten{font-size:12px;color:var(--orange);margin-top:3px}
-.fahrt-suggestion{font-size:10px;padding:4px 8px;border-radius:6px;display:inline-block;margin-top:5px}
+.fahrt-suggestion{font-size:12px;padding:4px 8px;border-radius:6px;display:inline-block;margin-top:5px}
 .fahrt-suggestion.d{background:rgba(200,241,53,.12);color:var(--dienst)}
 .fahrt-suggestion.p{background:rgba(255,92,92,.12);color:var(--privat)}
 .fahrt-suggestion.u{background:rgba(255,159,67,.15);color:var(--orange)}
@@ -94,7 +94,7 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 
 /* URLAUB */
 .pad{padding:14px}
-.info-box{border-radius:10px;padding:12px 14px;font-size:10px;line-height:1.7;margin-bottom:14px}
+.info-box{border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.7;margin-bottom:14px}
 .info-box.orange{background:rgba(255,159,67,.08);border:1px solid rgba(255,159,67,.2);color:var(--orange)}
 .info-box.green{background:rgba(200,241,53,.08);border:1px solid rgba(200,241,53,.2);color:var(--dienst)}
 .add-row{display:flex;gap:8px;margin-bottom:14px}
@@ -111,8 +111,8 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 
 /* PROTOKOLL */
 .proto-item{margin:0 14px 6px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 13px}
-.proto-time{font-size:9px;color:var(--muted);margin-bottom:3px}
-.proto-text{font-size:11px;color:var(--text)}
+.proto-time{font-size:12px;color:var(--muted);margin-bottom:3px}
+.proto-text{font-size:13px;color:var(--text)}
 
 /* ÜBERSICHT */
 .period-row{display:flex;gap:7px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none}
@@ -122,17 +122,17 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
 .stat-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 13px}
 .stat-box.full{grid-column:1/-1}
-.stat-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.stat-lbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .stat-val{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1}
 .stat-val.d{color:var(--dienst)}
 .stat-val.p{color:var(--privat)}
 .stat-val.t{color:var(--text)}
 .stat-val.o{color:var(--orange)}
-.stat-sub{font-size:10px;color:var(--muted);margin-top:4px}
+.stat-sub{font-size:12px;color:var(--muted);margin-top:4px}
 .bar-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px}
 .bar-row{margin-bottom:12px}
 .bar-row:last-child{margin-bottom:0}
-.bar-label{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:6px}
+.bar-label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px}
 .bar-track{background:var(--bg3);border-radius:3px;height:6px;overflow:hidden}
 .bar-fill{height:100%;border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)}
 .bar-fill.d{background:var(--dienst)}
@@ -140,10 +140,10 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 .month-block{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:8px}
 .month-block-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;cursor:pointer}
 .month-block-name{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px}
-.month-block-km{font-size:11px;color:var(--muted)}
+.month-block-km{font-size:13px;color:var(--muted)}
 .month-block-body{display:none;padding:0 14px 12px;border-top:1px solid var(--border)}
 .month-block-body.open{display:block}
-.month-row{display:flex;justify-content:space-between;padding:6px 0;font-size:10px;border-bottom:1px solid var(--border);gap:8px}
+.month-row{display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid var(--border);gap:8px}
 .month-row:last-child{border-bottom:none}
 .month-row .d{color:var(--dienst)}
 .month-row .p{color:var(--privat)}
@@ -154,7 +154,7 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 
 /* EINSTELLUNGEN */
 .set-field{margin-bottom:12px}
-.set-field label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px}
+.set-field label{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px}
 .set-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:14px;padding:11px 12px;outline:none;-webkit-appearance:none}
 .set-input:focus{border-color:var(--dienst)}
 .set-saved{font-size:10px;color:var(--dienst);letter-spacing:1px;text-align:center;padding:8px;display:none}
@@ -165,7 +165,7 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 
 /* BOTTOM NAV */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
-.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0 8px;cursor:pointer;color:var(--muted);transition:color .2s;font-size:8px;letter-spacing:1px;text-transform:uppercase;gap:3px}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0 8px;cursor:pointer;color:var(--muted);transition:color .2s;font-size:10px;letter-spacing:1px;text-transform:uppercase;gap:3px}
 .nav-btn .ico{font-size:17px}
 .nav-btn.active{color:var(--dienst)}
 
@@ -266,7 +266,9 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
       <div class="stat-box"><div class="stat-lbl">Dienst km</div><div class="stat-val d" id="sD">0</div><div class="stat-sub" id="sDpct">–</div></div>
       <div class="stat-box"><div class="stat-lbl">Privat km</div><div class="stat-val p" id="sP">0</div><div class="stat-sub" id="sPpct">–</div></div>
       <div class="stat-box"><div class="stat-lbl">Gesamt km</div><div class="stat-val t" id="sG">0</div><div class="stat-sub" id="sF">–</div></div>
-      <div class="stat-box"><div class="stat-lbl">Spritkosten</div><div class="stat-val o" id="sK">0</div><div class="stat-sub" id="sKsub">EUR gesamt</div></div>
+      <div class="stat-box"><div class="stat-lbl">Spritkosten gesamt</div><div class="stat-val o" id="sK">0.00</div><div class="stat-sub">EUR</div></div>
+      <div class="stat-box"><div class="stat-lbl">Kosten Dienst</div><div class="stat-val d" id="sKD">0.00</div><div class="stat-sub">EUR</div></div>
+      <div class="stat-box"><div class="stat-lbl">Kosten Privat</div><div class="stat-val p" id="sKP">0.00</div><div class="stat-sub">EUR</div></div>
     </div>
 
     <div class="bar-box">
@@ -658,7 +660,8 @@ function updateStats(){
   document.getElementById('sPpct').textContent=gKm>0?Math.round(pKm/gKm*100)+'% Anteil':'–';
   const pCost=fs.filter(f=>f.typ==='privat').reduce((s,f)=>s+(f.cost||0),0);
   document.getElementById('sK').textContent=cost.toFixed(2);
-  document.getElementById('sKsub').textContent=`EUR gesamt · D: ${dCost.toFixed(2)} · P: ${pCost.toFixed(2)} EUR`;
+  document.getElementById('sKD').textContent=dCost.toFixed(2);
+  document.getElementById('sKP').textContent=pCost.toFixed(2);
   document.getElementById('bDlbl').textContent=dKm.toLocaleString('de-AT')+' km';
   document.getElementById('bPlbl').textContent=pKm.toLocaleString('de-AT')+' km';
   document.getElementById('bD').style.width=gKm>0?(dKm/gKm*100)+'%':'0%';
