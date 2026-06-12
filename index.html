@@ -78,7 +78,8 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 .fahrt-item.privat{border-left-color:var(--privat)}
 .fahrt-item.locked{opacity:.7}
 .fi-info{flex:1}
-.fi-datum{font-size:12px;color:var(--muted);margin-bottom:1px}
+.fi-datum{font-size:15px;color:var(--text);font-weight:600;margin-bottom:3px;letter-spacing:.5px}
+.fi-times{font-size:13px;color:var(--muted);margin-bottom:3px}
 .fi-tag{font-size:12px;letter-spacing:1px;margin-bottom:2px}
 .fi-tag.wd{color:var(--dienst)}
 .fi-tag.we,.fi-tag.privat{color:var(--privat)}
@@ -540,10 +541,10 @@ function renderTodo() {
     const isDienst = f.typ==='dienst';
     return `<div class="fahrt-card">
       <div class="fahrt-head">
-        <div class="fahrt-datum">${fmtDatum(f.datum)} · ${fmtZeit(f.datum)}</div>
-        <div class="fahrt-wochentag ${wdCls}">${WTL[dow]}</div>
+        <div class="fahrt-datum">${fmtDatum(f.datum)} · ${WTL[dow]}</div>
+        <div class="fahrt-wochentag ${wdCls}">${fmtStartZeit(f.datum, f.dauer)} → ${fmtZeit(f.datum)} · ${f.dauer} min</div>
         <div class="fahrt-km-gross">${f.km} <span>km</span></div>
-        <div class="fahrt-meta">${f.kmStart.toLocaleString('de-AT')} → ${f.kmEnd.toLocaleString('de-AT')} · ${f.dauer} min · ⌀ ${f.avgSpeed} km/h</div>
+        <div class="fahrt-meta">${f.kmStart.toLocaleString('de-AT')} → ${f.kmEnd.toLocaleString('de-AT')} km · ⌀ ${f.avgSpeed} km/h</div>
         ${f.cost>0?`<div class="fahrt-kosten">⛽ ${f.cost.toFixed(2)} ${f.currency} · ${f.fuelPer100} l/100km · ${f.fuelPrice} ${f.currency}/l</div>`:''}
         <div class="fahrt-suggestion ${grund.cls}">${grund.text}</div>
       </div>
@@ -580,10 +581,11 @@ function renderAllFahrten() {
       const wdCls=isUrlaub(f.datum)?'urlaub':isWE(f.datum)?'we':'wd';
       html+=`<div class="fahrt-item ${f.typ}${locked?' locked':''}">
         <div class="fi-info">
-          <div class="fi-datum">${fmtDatum(f.datum)} ${fmtZeit(f.datum)}</div>
-          <div class="fi-tag ${wdCls}">${WT[dow]}${f.manuell?' · manuell':' · auto'}</div>
+          <div class="fi-datum">${fmtDatum(f.datum)} · ${WT[dow]}</div>
+          <div class="fi-times">${fmtStartZeit(f.datum, f.dauer)} → ${fmtZeit(f.datum)} · ${f.dauer} min</div>
+          <div class="fi-tag ${wdCls}">${f.manuell?'manuell':'auto'}</div>
           <div class="fi-km ${f.typ}">${f.km} <span style="font-size:11px;color:var(--muted)">km</span></div>
-          <div class="fi-meta">${f.kmStart.toLocaleString('de-AT')} → ${f.kmEnd.toLocaleString('de-AT')} · ${f.dauer}min</div>
+          <div class="fi-meta">${f.kmStart.toLocaleString('de-AT')} → ${f.kmEnd.toLocaleString('de-AT')} km</div>
           ${f.cost>0?`<div class="fi-kosten">⛽ ${f.cost.toFixed(2)} ${f.currency}</div>`:''}
         </div>
         ${!locked?`<div class="fi-undo" onclick="undoTyp('${escId(f.id)}')">↩</div>`:''}
@@ -815,6 +817,11 @@ function initSwipe(){
   },{passive:true});
 }
 
+function fmtStartZeit(iso, dauerMin) {
+  const end = new Date(iso);
+  const start = new Date(end.getTime() - dauerMin * 60000);
+  return String(start.getHours()).padStart(2,'0') + ':' + String(start.getMinutes()).padStart(2,'0');
+}
 function fmtDatum(iso){const d=new Date(iso);return`${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;}
 function fmtZeit(iso){const d=new Date(iso);return`${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
 function escId(id){return id.replace(/'/g,"\\'");}
