@@ -18,7 +18,7 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 .logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--dienst)}
 .logo span{color:var(--muted);font-size:12px;font-family:'IBM Plex Mono',monospace;letter-spacing:1px;margin-left:8px}
 .badge{background:var(--privat);color:#fff;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;display:none}
-.tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:53px;z-index:99;overflow-x:auto;scrollbar-width:none}
+.tabs{display:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{flex:0 0 auto;padding:11px 12px;text-align:center;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;position:relative}
 .tab.active{color:var(--dienst);border-bottom-color:var(--dienst)}
@@ -266,6 +266,8 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
 
 <div class="page" id="page5">
   <div class="pad">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--dienst);letter-spacing:2px;margin-bottom:4px">Version 1.4.0</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:16px">Škoda Fahrtenbuch · ricogrutze-oss.github.io</div>
     <div class="info-box green">👤 Fahrerdaten erscheinen auf dem Druckbericht</div>
     <div class="set-field"><label>Fahrer / Name</label><input type="text" id="setFahrer" class="set-input" placeholder="Max Mustermann" oninput="saveSettings()"></div>
     <div class="set-field"><label>Kennzeichen</label><input type="text" id="setKennzeichen" class="set-input" placeholder="W-123AB" oninput="saveSettings()"></div>
@@ -273,11 +275,7 @@ body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text
     <div class="set-field"><label>Arbeitgeber</label><input type="text" id="setArbeitgeber" class="set-input" placeholder="Firma GmbH" oninput="saveSettings()"></div>
     <div class="set-saved" id="setSaved">✓ Gespeichert</div>
     <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-top:12px">Alle Daten werden nur lokal auf diesem Gerät gespeichert.</div>
-    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
-      <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Version</div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--dienst)">1.4.0</div>
-      <div style="font-size:11px;color:var(--muted);margin-top:4px">Škoda Fahrtenbuch · ricogrutze-oss.github.io</div>
-    </div>
+
   </div>
 </div>
 
