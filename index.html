@@ -429,6 +429,20 @@ function setTyp(id,typ){
   if(!f||isLocked(f.datum))return;
   const alt=f.typ;
   f.typ=typ;f.manuell=true;f.auto=false;
+
+  // Überschneidungen entfernen: gleicher kmStart, gleicher Tag, kürzere Fahrten löschen
+  const tag=f.datum.substring(0,10);
+  const vorher=fahrten.length;
+  fahrten=fahrten.filter(other=>{
+    if(other.id===id)return true; // sich selbst behalten
+    if(other.datum.substring(0,10)!==tag)return true; // anderer Tag
+    if(other.kmStart===f.kmStart && other.km<f.km)return false; // kürzere mit gleichem Start → raus
+    if(other.kmStart>=f.kmStart && other.kmEnd<=f.kmEnd)return false; // komplett enthalten → raus
+    return true;
+  });
+  const geloescht=vorher-fahrten.length;
+  if(geloescht>0)logProto(`${geloescht} überschneidende Fahrt${geloescht!==1?'en':''} entfernt (${fmtDatum(f.datum)})`);
+
   save();logProto(`${fmtDatum(f.datum)} ${fmtZeit(f.datum)}: ${alt||'?'}→${typ}`);
   renderAll();
 }
